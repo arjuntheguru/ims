@@ -1,0 +1,26 @@
+﻿@page "/company"
+@using IMS.WebApp.Components.Company
+
+<PageTitle>Company</PageTitle>
+
+<MudGrid>
+    <MudItem md="4">
+        <MudPaper Outlined=true Height="86vh">
+           <CompanyList/>
+        </MudPaper>
+    </MudItem>
+    <MudItem md="8">
+        <MudPaper Outlined=true Height="86vh">
+            <MudPaper Class="grey lighten-4 shades-text text-dark" Elevation=0 Square=true>
+                <MudToolBar>
+                    <MudText Typo="Typo.h6">Company</MudText>
+                    <MudSpacer />
+                    <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Outlined.Add" OnClick="OpenDialog">Add</MudButton>
+                </MudToolBar>
+            </MudPaper>
+            <MudPaper Class="ma-4" Outlined=false Elevation="0">
+               <CompanyDetail/>
+            </MudPaper>
+        </MudPaper>
+    </MudItem>
+</MudGrid>

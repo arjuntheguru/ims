@@ -1,0 +1,276 @@
+﻿@using IMS.Application.Companies.Commands.CreateCompany
+@using IMS.Application.Common.Validators
+@using IMS.Domain.Common
+
+<MudDialog DisableSidePadding="true">
+    <TitleContent>
+        <MudText Typo="Typo.h5" Class="my-2">Add Company</MudText>
+        <MudDivider />
+    </TitleContent>
+    <DialogContent>
+        <MudContainer Style="max-height:75vh; overflow-y: scroll">
+            <MudForm Model=@model @ref="form" Validation="@(Validator.ValidateModel<CreateCompanyCommand,CreateCompanyCommandValidator>())" ValidationDelay="10">
+                <MudGrid Class="px-5 mb-2">
+                    <MudItem md="6">
+                        <MudTextField @bind-Value="model.Name"
+                                      For="@(() => model.Name)"                                     
+                                      Label="Company Name" />
+
+
+                    </MudItem>
+                    <MudItem md="6">
+                        <MudTextField @bind-Value="model.Email"
+                                      For="@(() => model.Email)"                                     
+                                      Label="Company Email" />
+
+                    </MudItem>
+                </MudGrid>
+                <MudExpansionPanels Elevation="0" MultiExpansion="true">
+                    <MudExpansionPanel IsInitiallyExpanded="true">
+                        <TitleContent>
+                            <MudText><strong>Address</strong></MudText>
+                        </TitleContent>
+                        <ChildContent>
+                            <MudGrid>
+                                <MudItem md="6">
+                                    <MudTextField @bind-Value="model.Address.AddressLine1"
+                                                  For="@(() => model.Address.AddressLine1)"
+                                                  Immediate="true"
+                                                  Label="Address Line 1" />
+
+                                    <MudTextField @bind-Value="model.Address.City"
+                                                  For="@(() => model.Address.City)"
+                                                  Immediate="true"
+                                                  Label="City" />
+
+                                    <MudTextField @bind-Value="model.Address.ZIP"
+                                                  For="@(() => model.Address.ZIP)"
+                                                  Immediate="true"
+                                                  Label="ZIP / Postal Code" />
+
+                                </MudItem>
+                                <MudItem md="6">
+                                    <MudTextField @bind-Value="model.Address.AddressLine2"
+                                                  For="@(() => model.Address.AddressLine2)"
+                                                  Immediate="true"
+                                                  Label="Address Line 2" />
+
+                                    <MudTextField @bind-Value="model.Address.State"
+                                                  For="@(() => model.Address.State)"
+                                                  Immediate="true"
+                                                  Label="State / Province / Region" />
+
+                                    <MudTextField @bind-Value="model.Address.Country"
+                                                  For="@(() => model.Address.Country)"
+                                                  Immediate="true"
+                                                  Label="Country" />
+
+                                </MudItem>
+                            </MudGrid>
+                        </ChildContent>
+                    </MudExpansionPanel>
+                    <MudExpansionPanel>
+                        <TitleContent>
+                            <MudText><strong>Contacts</strong></MudText>
+                        </TitleContent>
+                        <ChildContent>
+                            <MudGrid>
+                                <MudItem md="2">
+                                    <MudText Class="mt-6"><strong>Contact Number</strong></MudText>
+                                </MudItem>
+                                <MudItem md="5">
+
+                                    <MudTextField @bind-Value="model.PrimaryContactNumber"
+                                                  For="@(() => model.PrimaryContactNumber)"
+                                                  Immediate="true"
+                                                  Label="Primary" />
+
+                                </MudItem>
+                                <MudItem md="5">
+
+                                    <MudTextField @bind-Value="model.SecopndaryContactNumber"
+                                                  For="@(() => model.SecopndaryContactNumber)"
+                                                  Immediate="true"
+                                                  Label="Secondary" />
+                                </MudItem>
+                            </MudGrid>
+                            <MudGrid Class="mb-2">
+                                <MudItem md="2">
+                                    <MudText Class="mt-6"><strong>Primary Contact</strong></MudText>
+                                </MudItem>
+                                <MudItem md="2">
+                                    <MudSelect @bind-Value="model.PrimaryContact.Salutation"
+                                               Label="Salutation" AnchorOrigin="Origin.TopCenter"
+                                               For="@(() => model.PrimaryContact.Salutation)">
+                                        <MudSelectItem Value="@("Mr.")">Mr.</MudSelectItem>
+                                        <MudSelectItem Value="@("Ms.")">Ms.</MudSelectItem>
+                                        <MudSelectItem Value="@("Mrs.")">Mrs.</MudSelectItem>
+                                    </MudSelect>
+                                </MudItem>
+                                <MudItem md="3">
+                                    <MudTextField @bind-Value="model.PrimaryContact.FirstName"
+                                                  For="@(() => model.PrimaryContact.FirstName)"
+                                                  Immediate="true"
+                                                  Label="First Name" />
+                                </MudItem>
+                                <MudItem md="2">
+                                    <MudTextField @bind-Value="model.PrimaryContact.MiddleName"
+                                                  For="@(() => model.PrimaryContact.MiddleName)"
+                                                  Immediate="true"
+                                                  Label="Middle Name" />
+                                </MudItem>
+                                <MudItem md="3">
+                                    <MudTextField @bind-Value="model.PrimaryContact.LastName"
+                                                  For="@(() => model.PrimaryContact.LastName)"
+                                                  Immediate="true"
+                                                  Label="Last Name" />
+                                </MudItem>
+                            </MudGrid>
+                            <MudTable Items="@model.OtherContacts" Hover="false" Breakpoint="Breakpoint.None" Dense="@true" Elevation="0" Bordered="false">
+                                <RowTemplate>
+                                    <MudTd>
+                                        <MudForm Model="@context" Validation=@(Validator.ValidateModel<ContactPerson,ContactPersonValidator>())>
+                                            <MudGrid Class="mb-2">
+                                                <MudItem md="2">
+                                                    <MudText Class="mt-6"><strong>Addt'l Contact</strong></MudText>
+                                                </MudItem>
+                                                <MudItem md="2">
+                                                    <MudSelect @bind-Value="context.Salutation"
+                                                               Label="Salutation" AnchorOrigin="Origin.TopCenter"
+                                                               For="@(() => context.Salutation)">
+                                                        <MudSelectItem Value="@("Mr.")">Mr.</MudSelectItem>
+                                                        <MudSelectItem Value="@("Ms.")">Ms.</MudSelectItem>
+                                                        <MudSelectItem Value="@("Mrs.")">Mrs.</MudSelectItem>
+                                                    </MudSelect>
+                                                </MudItem>
+                                                <MudItem md="3">
+                                                    <MudTextField @bind-Value="context.FirstName"
+                                                                  For="@(() => context.FirstName)"
+                                                                  Immediate="true"
+                                                                  Label="First Name" />
+                                                </MudItem>
+                                                <MudItem md="2">
+                                                    <MudTextField @bind-Value="context.MiddleName"
+                                                                  For="@(() => context.MiddleName)"
+                                                                  Immediate="true"
+                                                                  Label="Middle Name" />
+                                                </MudItem>
+                                                <MudItem md="3">
+                                                    <MudGrid>
+                                                        <MudItem md="8">
+                                                            <MudTextField @bind-Value="context.LastName"
+                                                                          For="@(() => context.LastName)"
+                                                                          Immediate="true"
+                                                                          Label="Last Name" />
+                                                        </MudItem>
+                                                        <MudItem md="4" Class="mt-4">
+                                                            <MudTooltip Text="Remove">
+                                                                <MudIconButton Color="Color.Error"
+                                                                               Icon="@Icons.Material.Outlined.RemoveCircleOutline"
+                                                                               OnClick="@(() => RemoveAdditionalContact(context))"></MudIconButton>
+                                                            </MudTooltip>
+                                                        </MudItem>
+                                                    </MudGrid>
+
+
+                                                </MudItem>
+                                            </MudGrid>
+                                        </MudForm>
+
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                            <MudGrid>
+                                <MudItem md="2">
+                                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" StartIcon="@Icons.Material.Outlined.Add" OnClick="AddOtherContact">Add</MudButton>
+                                </MudItem>
+                                <MudItem md="6" Class="@contactWarningVisibility" @ref="contactWarning">
+                                    <MudAlert Severity="MudBlazor.Severity.Warning" Dense="true">Cannot add more than two additional contacts.</MudAlert>
+                                </MudItem>
+                            </MudGrid>
+                        </ChildContent>
+                    </MudExpansionPanel>
+                    <MudExpansionPanel>
+                        <TitleContent>
+                            <MudText><strong>Settings</strong></MudText>
+                        </TitleContent>
+                        <ChildContent>
+                            <MudGrid>
+                                <MudItem md="6">
+                                    <MudDatePicker @bind-Date="model.SubscriptionStartDate"
+                                                   For="@(() => model.SubscriptionStartDate)"
+                                                   Label="Subscription Start Date" />
+                                    <MudNumericField @bind-Value="model.WarehouseCount"
+                                                     For="@(() => model.WarehouseCount)"
+                                                     Immediate="true"
+                                                     Label="Warehouse Count" />
+
+
+                                </MudItem>
+                                <MudItem md="6">
+                                    <MudDatePicker @bind-Date="model.SubscriptionEndDate"
+                                                   For="@(() => model.SubscriptionEndDate)"
+                                                   Label="Subscription End Date" />
+                                    <MudSelect @bind-Value="model.Currency"
+                                               Label="Currency"
+                                               AnchorOrigin="Origin.TopCenter"
+                                               For="@(() => model.Currency)">
+                                        @foreach (var currency in GetCurrency())
+                                        {
+                                            <MudSelectItem Value="@currency">@currency.Symbol @currency.Code</MudSelectItem>
+                                        }
+                                    </MudSelect>
+
+                                </MudItem>
+                            </MudGrid>
+                        </ChildContent>
+                    </MudExpansionPanel>
+                    <MudExpansionPanel>
+                        <TitleContent>
+                            <MudText><strong>Admin Details</strong></MudText>
+                        </TitleContent>
+                        <ChildContent>
+                            <MudGrid>
+                                <MudItem md="1" Class="align-self-center mt-5">
+                                    <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Large"></MudIcon>
+                                </MudItem>
+                                <MudItem md="3">
+                                    <MudTextField @bind-Value="model.Admin.Email"
+                                                  For="@(() => model.Admin.Email)"                                                
+                                                  Label="Email" />
+                                </MudItem>
+                                <MudItem md="3">
+
+                                    <MudTextField @bind-Value="model.Admin.Username"
+                                                  For="@(() => model.Admin.Username)"
+                                                  Immediate="true"
+                                                  Label="Username" />
+                                </MudItem>
+                                <MudItem md="1" Class="align-self-center">
+                                    <MudTooltip Text="Generate Username">
+                                        <MudIconButton Icon="@Icons.Material.Rounded.Assistant" Variant="Variant.Outlined" Color="Color.Tertiary"></MudIconButton>
+                                    </MudTooltip>
+                                </MudItem>
+                                <MudItem md="3">
+                                    <MudTextField @bind-Value="model.Admin.Password"
+                                                  For="@(() => model.Admin.Password)"
+                                                  Immediate="true"
+                                                  Label="Password" />
+                                </MudItem>
+                                <MudItem md="1" Class="align-self-center">
+                                    <MudTooltip Text="Generate Password">
+                                        <MudIconButton Icon="@Icons.Material.Rounded.Key" Variant="Variant.Outlined" Color="Color.Tertiary"></MudIconButton>
+                                    </MudTooltip>
+                                </MudItem>
+                            </MudGrid>
+                        </ChildContent>
+                    </MudExpansionPanel>
+                </MudExpansionPanels>
+            </MudForm>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Submit</MudButton>
+    </DialogActions>
+</MudDialog>

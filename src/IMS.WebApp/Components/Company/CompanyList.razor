@@ -1,0 +1,39 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<MudTextField @bind-Value="SearchString" Label="Search Company" Variant="Variant.Outlined" Class="pa-6"></MudTextField>
+@if (CompanyState.Value.IsLoading)
+{
+    <MudPaper Class="d-flex flex-grow-1 gap-4 justify-center" Outlined="true" Square=true Height="63vh">
+        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" Class="align-self-center" />
+        @*<MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="align-self-center" />*@
+    </MudPaper>
+}
+else
+{
+    <MudPaper Class="overflow-auto" Outlined="true" Square=true Height="63vh">
+
+        @if (CompanyState.Value.CurrentCompanies.Count() > 0)
+        {
+            <MudList Clickable="true" SelectedValue="@CompanyState.Value.CurrentCompany">
+                @foreach (var company in CompanyState.Value.CurrentCompanies)
+                {
+                    <MudListItem Value=@company OnClick="@(() => SelectCompanyHandler(@company))">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.body1">@company.Name</MudText>
+                                <MudText Typo="Typo.body2">@company.Address.City, @company.Address.Country</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                    </MudListItem>
+                }
+            </MudList>
+        }
+    </MudPaper>
+    <MudPaper Elevation="0" Class="d-flex flex-column align-center">
+        <MudPagination Variant="Variant.Text" BoundaryCount="1" MiddleCount="1"
+                   Count="@((int)Math.Ceiling((double)CompanyState.Value.TotalRecords/5))"
+                   Class="ma-4"
+                   Selected="@CompanyState.Value.CurrentPage"
+                   SelectedChanged="@PageNumberChangeHandler" />
+    </MudPaper>
+}
