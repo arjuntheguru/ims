@@ -1,5 +1,5 @@
 ﻿using Fluxor;
-using IMS.Application.Companies.Commands.CreateCompany;
+using IMS.Application.Companies.Commands.AddEditCompany;
 using IMS.Application.Companies.DTOs;
 using IMS.WebApp.Store.Company.Actions.AddCompany;
 using IMS.WebApp.Store.Company.Actions.LoadCompanies;
@@ -41,9 +41,9 @@ namespace IMS.WebApp.Services
             }
         }
 
-        public void CreateCompnay(CreateCompanyCommand command)
+        public void CreateCompnay(AddEditCompanyCommand command)
         {
-            _dispatcher.Dispatch(new AddCompanyAction(command));
+            _dispatcher.Dispatch(new AddEditCompanyAction(command));
         }
     }
 }

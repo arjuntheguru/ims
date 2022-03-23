@@ -18,8 +18,7 @@ namespace IMS.Application.Companies.DTOs
         public string SecopndaryContactNumber { get; set; }
         public string Email { get; set; }
         public Address Address { get; set; }
-        public bool IsActive { get; set; }
-        public Currency Currency { get; set; }
+        public bool IsActive { get; set; }       
         public CompanySetting Setting { get; set; }
         public IEnumerable<string> WarehouseIds { get; set; }
         public IEnumerable<string> UserIds { get; set; }

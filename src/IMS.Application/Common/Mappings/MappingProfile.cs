@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IMS.Application.Companies.Commands.AddEditCompany;
 using IMS.Application.Companies.DTOs;
 using IMS.Domain.Entites;
 using System;
@@ -14,6 +15,7 @@ namespace IMS.Application.Common.Mappings
         public MappingProfile()
         {
             CreateMap<Company, CompanyDto>();
+            CreateMap<CompanyDto, AddEditCompanyCommand>();
         }
     }
 }

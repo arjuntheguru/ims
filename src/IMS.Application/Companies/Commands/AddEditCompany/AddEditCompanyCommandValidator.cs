@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMS.Application.Companies.Commands.CreateCompany
+namespace IMS.Application.Companies.Commands.AddEditCompany
 {
-    public class CreateCompanyCommandValidator : AbstractValidator<CreateCompanyCommand>
+    public class AddEditCompanyCommandValidator : AbstractValidator<AddEditCompanyCommand>
     {
-        public CreateCompanyCommandValidator()
+        public AddEditCompanyCommandValidator()
         {
             RuleFor(c => c.Name).NotEmpty();
             RuleFor(c => c.Email).NotEmpty().EmailAddress();
@@ -21,10 +21,11 @@ namespace IMS.Application.Companies.Commands.CreateCompany
             RuleFor(p => p.Admin).SetValidator(new CreateAdminRequestValidator());
             RuleFor(p => p.PrimaryContactNumber).NotEmpty();
             RuleFor(p => p.PrimaryContactNumber).NotEmpty();
-            RuleFor(p => p.Currency).NotEmpty();
-            RuleFor(p => p.SubscriptionStartDate).NotEmpty().LessThan(p => p.SubscriptionEndDate).When(p => p.SubscriptionEndDate != null);
-            RuleFor(p => p.SubscriptionEndDate).NotEmpty().GreaterThan(p => p.SubscriptionStartDate);
-            RuleFor(p => p.WarehouseCount).NotEmpty().GreaterThan(0);
+            RuleFor(p => p.Setting.Currency).NotEmpty();
+            RuleFor(p => p.Setting.SubscriptionStartDate).NotEmpty();
+            RuleFor(p => p.Setting.SubscriptionStartDate).LessThan(p => p.Setting.SubscriptionEndDate).When(p => p.Setting.SubscriptionEndDate != null);
+            RuleFor(p => p.Setting.SubscriptionEndDate).NotEmpty().GreaterThan(p => p.Setting.SubscriptionStartDate);
+            RuleFor(p => p.Setting.WarehouseCount).NotEmpty().GreaterThan(0);
         }
     }
 }

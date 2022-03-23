@@ -7,7 +7,7 @@
             <MudText Typo="Typo.h6" Class="mt-2">@CompanyState.Value.CurrentCompany.Name</MudText>
         </MudItem>
         <MudItem md="4" Class="d-flex justify-end">
-            <MudIconButton Icon="@Icons.Material.Outlined.Edit" Color="Color.Inherit" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Edit" Color="Color.Inherit" OnClick="() => OpenDialog(CompanyState.Value.CurrentCompany)" />
             <MudIconButton Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
         </MudItem>
     </MudGrid>
@@ -21,7 +21,7 @@
             <MudText Typo="Typo.body2">@CompanyState.Value.CurrentCompany.Address.Country</MudText>
         </MudItem>
         <MudItem md="5">
-            <MudText Typo="Typo.body2"><b>Warehouses : </b>@CompanyState.Value.CurrentCompany.Setting.MaxWarehouseCount</MudText>
+            <MudText Typo="Typo.body2"><b>Warehouses : </b>@CompanyState.Value.CurrentCompany.Setting.WarehouseCount</MudText>
             <MudText Typo="Typo.body2"><b>Start Date : </b>@CompanyState.Value.CurrentCompany.Setting.SubscriptionStartDate.Value.ToString("D")</MudText>
             <MudText Typo="Typo.body2"><b>End Date : </b>@CompanyState.Value.CurrentCompany.Setting.SubscriptionEndDate.Value.ToString("D")</MudText>
         </MudItem>

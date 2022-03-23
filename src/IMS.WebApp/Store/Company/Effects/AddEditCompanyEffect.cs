@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace IMS.WebApp.Store.Company.Effects
 {
-    public class AddCompanyEffect : Effect<AddCompanyAction>
+    public class AddEditCompanyEffect : Effect<AddEditCompanyAction>
     {
         private readonly ISender _sender;
         private readonly SnackbarHandler _snackbarHandler;
 
-        public AddCompanyEffect(
+        public AddEditCompanyEffect(
             ISender sender, 
             SnackbarHandler snackbarHandler)
         {
@@ -25,17 +25,17 @@ namespace IMS.WebApp.Store.Company.Effects
             _snackbarHandler = snackbarHandler;
         }
 
-        public async override Task HandleAsync(AddCompanyAction action, IDispatcher dispatcher)
+        public async override Task HandleAsync(AddEditCompanyAction action, IDispatcher dispatcher)
         {
             var response = await _sender.Send(action.CreateCompanyCommand);
 
             if (response.Succeeded)
             {
-                dispatcher.Dispatch(new AddCompanySuccessAction());
+                dispatcher.Dispatch(new AddEditCompanySuccessAction());
                 dispatcher.Dispatch(new LoadCompaniesAction(1, 5));
             }           
             else
-                dispatcher.Dispatch(new AddCompanyFailureAction(response.Message));
+                dispatcher.Dispatch(new AddEditCompanyFailureAction(response.Message));
             
             _snackbarHandler.ShowSnackbar(response.Succeeded, response.Message);
         }

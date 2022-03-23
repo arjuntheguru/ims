@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace IMS.WebApp.Store.Company.Actions.AddCompany
 {
-    public class AddCompanyFailureAction : FailureAction
+    public class AddEditCompanyFailureAction : FailureAction
     {
-        public AddCompanyFailureAction(string errorMessage) : base(errorMessage)
+        public AddEditCompanyFailureAction(string errorMessage) : base(errorMessage)
         {
         }
     }

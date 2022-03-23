@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IMS.WebApp.Store.Company.Actions.AddCompany
 {
-    public class AddCompanySuccessAction
+    public class AddEditCompanySuccessAction
     {
        
     }

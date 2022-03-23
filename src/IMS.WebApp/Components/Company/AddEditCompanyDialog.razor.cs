@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using IMS.Application.Companies.Commands.CreateCompany;
+using IMS.Application.Companies.Commands.AddEditCompany;
 using IMS.Domain.Common;
 using IMS.WebApp.Services;
 using MediatR;
@@ -22,18 +22,24 @@ namespace IMS.WebApp.Components.Company
 
         MudForm form;
 
+        MudExpansionPanels expansionPanels;
+
+        [Parameter]
+        public bool IsEdit { get; set; } = false;
+
         MudItem contactWarning;
         string contactWarningVisibility = "invisible";
 
-        private CreateCompanyCommand model = new CreateCompanyCommand();
+        [Parameter]
+        public AddEditCompanyCommand Model { get; set; } = new AddEditCompanyCommand();
 
-        private CreateCompanyCommandValidator modelValidator = new();
+        private AddEditCompanyCommandValidator modelValidator = new();
 
         private void AddOtherContact()
         {
-            if (model.OtherContacts.Count < 2)
+            if (Model.OtherContacts.Count < 2)
             {
-                model.OtherContacts.Add(new ContactPerson());               
+                Model.OtherContacts.Add(new ContactPerson());               
             }
             else
             {
@@ -49,7 +55,7 @@ namespace IMS.WebApp.Components.Company
                 contactWarningVisibility = "invisible";
                 StateHasChanged();
             }
-            model.OtherContacts.Remove(contactPerson);
+            Model.OtherContacts.Remove(contactPerson);
         }          
 
         public async Task Submit()
@@ -60,7 +66,11 @@ namespace IMS.WebApp.Components.Company
             if (form.IsValid)
             {
                 MudDialog.Close(DialogResult.Ok(true));
-                CompanyStateFacade.CreateCompnay(model);
+                CompanyStateFacade.CreateCompnay(Model);
+            }
+            else
+            {
+                expansionPanels.ExpandAll();
             }
         }
 

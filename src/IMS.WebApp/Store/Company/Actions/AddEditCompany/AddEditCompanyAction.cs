@@ -1,4 +1,4 @@
-﻿using IMS.Application.Companies.Commands.CreateCompany;
+﻿using IMS.Application.Companies.Commands.AddEditCompany;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace IMS.WebApp.Store.Company.Actions.AddCompany
 {
-    public class AddCompanyAction
+    public class AddEditCompanyAction
     {
-        public CreateCompanyCommand CreateCompanyCommand { get; }
+        public AddEditCompanyCommand CreateCompanyCommand { get; }
 
-        public AddCompanyAction(CreateCompanyCommand createCompanyCommand)
+        public AddEditCompanyAction(AddEditCompanyCommand createCompanyCommand)
         {
             CreateCompanyCommand = createCompanyCommand;
         }

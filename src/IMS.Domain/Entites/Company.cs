@@ -16,8 +16,7 @@ namespace IMS.Domain.Entites
         public string SecopndaryContactNumber { get; set; }
         public string Email { get; set; }
         public Address Address { get; set; }        
-        public bool IsActive { get; set; }
-        public Currency Currency { get; set; }
+        public bool IsActive { get; set; }       
         public CompanySetting Setting { get; set; }
         public IEnumerable<string> WarehouseIds { get; set; }
         public IEnumerable<string> UserIds { get; set; }
@@ -25,7 +24,8 @@ namespace IMS.Domain.Entites
 
     public class CompanySetting
     {
-        public int? MaxWarehouseCount { get; set; }
+        public int? WarehouseCount { get; set; }
+        public Currency Currency { get; set; }
         public DateTime? SubscriptionStartDate { get; set; }
         public DateTime? SubscriptionEndDate { get; set; }       
     }

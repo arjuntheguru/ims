@@ -1,31 +1,31 @@
-﻿@using IMS.Application.Companies.Commands.CreateCompany
+﻿@using IMS.Application.Companies.Commands.AddEditCompany
 @using IMS.Application.Common.Validators
 @using IMS.Domain.Common
 
 <MudDialog DisableSidePadding="true">
     <TitleContent>
-        <MudText Typo="Typo.h5" Class="my-2">Add Company</MudText>
+        <MudText Typo="Typo.h5" Class="my-2">@(IsEdit? "Edit" :"Add") Company</MudText>
         <MudDivider />
     </TitleContent>
     <DialogContent>
         <MudContainer Style="max-height:75vh; overflow-y: scroll">
-            <MudForm Model=@model @ref="form" Validation="@(Validator.ValidateModel<CreateCompanyCommand,CreateCompanyCommandValidator>())" ValidationDelay="10">
+            <MudForm Model=@Model @ref="form" Validation="@(Validator.ValidateModel<AddEditCompanyCommand,AddEditCompanyCommandValidator>())" ValidationDelay="10">
+                <input hidden="hidden" @bind-value="Model.Id" />
                 <MudGrid Class="px-5 mb-2">
                     <MudItem md="6">
-                        <MudTextField @bind-Value="model.Name"
-                                      For="@(() => model.Name)"                                     
+                        <MudTextField @bind-Value="Model.Name"
+                                      For="@(() => Model.Name)"
                                       Label="Company Name" />
-
 
                     </MudItem>
                     <MudItem md="6">
-                        <MudTextField @bind-Value="model.Email"
-                                      For="@(() => model.Email)"                                     
+                        <MudTextField @bind-Value="Model.Email"
+                                      For="@(() => Model.Email)"
                                       Label="Company Email" />
 
                     </MudItem>
                 </MudGrid>
-                <MudExpansionPanels Elevation="0" MultiExpansion="true">
+                <MudExpansionPanels Elevation="0" MultiExpansion="true" @ref=expansionPanels>
                     <MudExpansionPanel IsInitiallyExpanded="true">
                         <TitleContent>
                             <MudText><strong>Address</strong></MudText>
@@ -33,35 +33,35 @@
                         <ChildContent>
                             <MudGrid>
                                 <MudItem md="6">
-                                    <MudTextField @bind-Value="model.Address.AddressLine1"
-                                                  For="@(() => model.Address.AddressLine1)"
+                                    <MudTextField @bind-Value="Model.Address.AddressLine1"
+                                                  For="@(() => Model.Address.AddressLine1)"
                                                   Immediate="true"
                                                   Label="Address Line 1" />
 
-                                    <MudTextField @bind-Value="model.Address.City"
-                                                  For="@(() => model.Address.City)"
+                                    <MudTextField @bind-Value="Model.Address.City"
+                                                  For="@(() => Model.Address.City)"
                                                   Immediate="true"
                                                   Label="City" />
 
-                                    <MudTextField @bind-Value="model.Address.ZIP"
-                                                  For="@(() => model.Address.ZIP)"
+                                    <MudTextField @bind-Value="Model.Address.ZIP"
+                                                  For="@(() => Model.Address.ZIP)"
                                                   Immediate="true"
                                                   Label="ZIP / Postal Code" />
 
                                 </MudItem>
                                 <MudItem md="6">
-                                    <MudTextField @bind-Value="model.Address.AddressLine2"
-                                                  For="@(() => model.Address.AddressLine2)"
+                                    <MudTextField @bind-Value="Model.Address.AddressLine2"
+                                                  For="@(() => Model.Address.AddressLine2)"
                                                   Immediate="true"
                                                   Label="Address Line 2" />
 
-                                    <MudTextField @bind-Value="model.Address.State"
-                                                  For="@(() => model.Address.State)"
+                                    <MudTextField @bind-Value="Model.Address.State"
+                                                  For="@(() => Model.Address.State)"
                                                   Immediate="true"
                                                   Label="State / Province / Region" />
 
-                                    <MudTextField @bind-Value="model.Address.Country"
-                                                  For="@(() => model.Address.Country)"
+                                    <MudTextField @bind-Value="Model.Address.Country"
+                                                  For="@(() => Model.Address.Country)"
                                                   Immediate="true"
                                                   Label="Country" />
 
@@ -80,16 +80,16 @@
                                 </MudItem>
                                 <MudItem md="5">
 
-                                    <MudTextField @bind-Value="model.PrimaryContactNumber"
-                                                  For="@(() => model.PrimaryContactNumber)"
+                                    <MudTextField @bind-Value="Model.PrimaryContactNumber"
+                                                  For="@(() => Model.PrimaryContactNumber)"
                                                   Immediate="true"
                                                   Label="Primary" />
 
                                 </MudItem>
                                 <MudItem md="5">
 
-                                    <MudTextField @bind-Value="model.SecopndaryContactNumber"
-                                                  For="@(() => model.SecopndaryContactNumber)"
+                                    <MudTextField @bind-Value="Model.SecopndaryContactNumber"
+                                                  For="@(() => Model.SecopndaryContactNumber)"
                                                   Immediate="true"
                                                   Label="Secondary" />
                                 </MudItem>
@@ -99,34 +99,34 @@
                                     <MudText Class="mt-6"><strong>Primary Contact</strong></MudText>
                                 </MudItem>
                                 <MudItem md="2">
-                                    <MudSelect @bind-Value="model.PrimaryContact.Salutation"
+                                    <MudSelect @bind-Value="Model.PrimaryContact.Salutation"
                                                Label="Salutation" AnchorOrigin="Origin.TopCenter"
-                                               For="@(() => model.PrimaryContact.Salutation)">
+                                               For="@(() => Model.PrimaryContact.Salutation)">
                                         <MudSelectItem Value="@("Mr.")">Mr.</MudSelectItem>
                                         <MudSelectItem Value="@("Ms.")">Ms.</MudSelectItem>
                                         <MudSelectItem Value="@("Mrs.")">Mrs.</MudSelectItem>
                                     </MudSelect>
                                 </MudItem>
                                 <MudItem md="3">
-                                    <MudTextField @bind-Value="model.PrimaryContact.FirstName"
-                                                  For="@(() => model.PrimaryContact.FirstName)"
+                                    <MudTextField @bind-Value="Model.PrimaryContact.FirstName"
+                                                  For="@(() => Model.PrimaryContact.FirstName)"
                                                   Immediate="true"
                                                   Label="First Name" />
                                 </MudItem>
                                 <MudItem md="2">
-                                    <MudTextField @bind-Value="model.PrimaryContact.MiddleName"
-                                                  For="@(() => model.PrimaryContact.MiddleName)"
+                                    <MudTextField @bind-Value="Model.PrimaryContact.MiddleName"
+                                                  For="@(() => Model.PrimaryContact.MiddleName)"
                                                   Immediate="true"
                                                   Label="Middle Name" />
                                 </MudItem>
                                 <MudItem md="3">
-                                    <MudTextField @bind-Value="model.PrimaryContact.LastName"
-                                                  For="@(() => model.PrimaryContact.LastName)"
+                                    <MudTextField @bind-Value="Model.PrimaryContact.LastName"
+                                                  For="@(() => Model.PrimaryContact.LastName)"
                                                   Immediate="true"
                                                   Label="Last Name" />
                                 </MudItem>
                             </MudGrid>
-                            <MudTable Items="@model.OtherContacts" Hover="false" Breakpoint="Breakpoint.None" Dense="@true" Elevation="0" Bordered="false">
+                            <MudTable Items="@Model.OtherContacts" Hover="false" Breakpoint="Breakpoint.None" Dense="@true" Elevation="0" Bordered="false">
                                 <RowTemplate>
                                     <MudTd>
                                         <MudForm Model="@context" Validation=@(Validator.ValidateModel<ContactPerson,ContactPersonValidator>())>
@@ -197,24 +197,24 @@
                         <ChildContent>
                             <MudGrid>
                                 <MudItem md="6">
-                                    <MudDatePicker @bind-Date="model.SubscriptionStartDate"
-                                                   For="@(() => model.SubscriptionStartDate)"
+                                    <MudDatePicker @bind-Date="Model.Setting.SubscriptionStartDate"
+                                                   For="@(() => Model.Setting.SubscriptionStartDate)"
                                                    Label="Subscription Start Date" />
-                                    <MudNumericField @bind-Value="model.WarehouseCount"
-                                                     For="@(() => model.WarehouseCount)"
+                                    <MudNumericField @bind-Value="Model.Setting.WarehouseCount"
+                                                     For="@(() => Model.Setting.WarehouseCount)"
                                                      Immediate="true"
                                                      Label="Warehouse Count" />
 
 
                                 </MudItem>
                                 <MudItem md="6">
-                                    <MudDatePicker @bind-Date="model.SubscriptionEndDate"
-                                                   For="@(() => model.SubscriptionEndDate)"
+                                    <MudDatePicker @bind-Date="Model.Setting.SubscriptionEndDate"
+                                                   For="@(() => Model.Setting.SubscriptionEndDate)"
                                                    Label="Subscription End Date" />
-                                    <MudSelect @bind-Value="model.Currency"
+                                    <MudSelect @bind-Value="Model.Setting.Currency"
                                                Label="Currency"
                                                AnchorOrigin="Origin.TopCenter"
-                                               For="@(() => model.Currency)">
+                                               For="@(() => Model.Setting.Currency)">
                                         @foreach (var currency in GetCurrency())
                                         {
                                             <MudSelectItem Value="@currency">@currency.Symbol @currency.Code</MudSelectItem>
@@ -225,46 +225,49 @@
                             </MudGrid>
                         </ChildContent>
                     </MudExpansionPanel>
-                    <MudExpansionPanel>
-                        <TitleContent>
-                            <MudText><strong>Admin Details</strong></MudText>
-                        </TitleContent>
-                        <ChildContent>
-                            <MudGrid>
-                                <MudItem md="1" Class="align-self-center mt-5">
-                                    <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Large"></MudIcon>
-                                </MudItem>
-                                <MudItem md="3">
-                                    <MudTextField @bind-Value="model.Admin.Email"
-                                                  For="@(() => model.Admin.Email)"                                                
+                    @if (!IsEdit)
+                    {
+                        <MudExpansionPanel>
+                            <TitleContent>
+                                <MudText><strong>Admin Details</strong></MudText>
+                            </TitleContent>
+                            <ChildContent>
+                                <MudGrid>
+                                    <MudItem md="1" Class="align-self-center">
+                                        <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Large"></MudIcon>
+                                    </MudItem>
+                                    <MudItem md="3">
+                                        <MudTextField @bind-Value="Model.Admin.Email"
+                                                  For="@(() => Model.Admin.Email)"
                                                   Label="Email" />
-                                </MudItem>
-                                <MudItem md="3">
+                                    </MudItem>
+                                    <MudItem md="3">
 
-                                    <MudTextField @bind-Value="model.Admin.Username"
-                                                  For="@(() => model.Admin.Username)"
+                                        <MudTextField @bind-Value="Model.Admin.Username"
+                                                  For="@(() => Model.Admin.Username)"
                                                   Immediate="true"
                                                   Label="Username" />
-                                </MudItem>
-                                <MudItem md="1" Class="align-self-center">
-                                    <MudTooltip Text="Generate Username">
-                                        <MudIconButton Icon="@Icons.Material.Rounded.Assistant" Variant="Variant.Outlined" Color="Color.Tertiary"></MudIconButton>
-                                    </MudTooltip>
-                                </MudItem>
-                                <MudItem md="3">
-                                    <MudTextField @bind-Value="model.Admin.Password"
-                                                  For="@(() => model.Admin.Password)"
+                                    </MudItem>
+                                    <MudItem md="1">
+                                        <MudTooltip Text="Generate Username">
+                                            <MudIconButton Icon="@Icons.Material.Rounded.Assistant" Variant="Variant.Outlined" Color="Color.Tertiary"></MudIconButton>
+                                        </MudTooltip>
+                                    </MudItem>
+                                    <MudItem md="3">
+                                        <MudTextField @bind-Value="Model.Admin.Password"
+                                                  For="@(() => Model.Admin.Password)"
                                                   Immediate="true"
                                                   Label="Password" />
-                                </MudItem>
-                                <MudItem md="1" Class="align-self-center">
-                                    <MudTooltip Text="Generate Password">
-                                        <MudIconButton Icon="@Icons.Material.Rounded.Key" Variant="Variant.Outlined" Color="Color.Tertiary"></MudIconButton>
-                                    </MudTooltip>
-                                </MudItem>
-                            </MudGrid>
-                        </ChildContent>
-                    </MudExpansionPanel>
+                                    </MudItem>
+                                    <MudItem md="1">
+                                        <MudTooltip Text="Generate Password">
+                                            <MudIconButton Icon="@Icons.Material.Rounded.Key" Variant="Variant.Outlined" Color="Color.Tertiary"></MudIconButton>
+                                        </MudTooltip>
+                                    </MudItem>
+                                </MudGrid>
+                            </ChildContent>
+                        </MudExpansionPanel>
+                    }
                 </MudExpansionPanels>
             </MudForm>
         </MudContainer>
