@@ -13,6 +13,10 @@ using IMS.WebApp.Components.Company;
 using Fluxor;
 using System.Reflection;
 using IMS.WebApp.Services;
+using Microsoft.AspNetCore.Components.Authorization;
+using Blazored.SessionStorage;
+using IMS.Infrastructure.Persistence.SeedData;
+using IMS.Infrastructure.Persistence.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,8 +42,30 @@ builder.Services.AddFluxor(options =>
     options.ScanAssemblies(Assembly.GetExecutingAssembly());
     options.UseReduxDevTools();
 });
+var superAdminModules = SuperAdminModules.GetSuperAdminModules();
+
+builder.Services.AddAuthorizationCore(options =>
+{
+    foreach (var module in superAdminModules)
+    {
+        options.AddPolicy($"{module}.Write", policy => policy
+        .RequireClaim("Permission", $"{module}.Create")
+        .RequireClaim("Permission", $"{module}.Edit"));
+
+        options.AddPolicy($"{module}.View", policy => policy
+        .RequireClaim("Permission", $"{module}.View"));
+
+        options.AddPolicy($"{module}.Delete", policy => policy
+        .RequireClaim("Permission", $"{module}.Delete"));
+    }
+
+});
+builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped<CompanyStateFacade>();
 builder.Services.AddScoped<SnackbarHandler>();
+//builder.Services.AddScoped<CustomAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+builder.Services.AddHostedService<SeedDataService>();
 
 var app = builder.Build();
 
@@ -56,8 +82,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-
 app.Run();

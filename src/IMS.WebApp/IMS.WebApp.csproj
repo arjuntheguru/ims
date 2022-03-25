@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.SessionStorage" Version="2.2.0" />
     <PackageReference Include="Fluxor.Blazor.Web" Version="5.1.0" />
     <PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.1.0" />
     <PackageReference Include="MudBlazor" Version="6.0.7" />

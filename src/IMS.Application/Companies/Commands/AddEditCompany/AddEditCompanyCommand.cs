@@ -69,6 +69,7 @@ namespace IMS.Application.Companies.Commands.AddEditCompany
                 };
 
                 await _userManager.CreateAsync(applicationUser, request.Admin.Password);
+                await _userManager.AddToRoleAsync(applicationUser, Roles.COMPANY_ADMIN);
 
                 return new Response<Unit>(Unit.Value, "Company added successfully");
             }

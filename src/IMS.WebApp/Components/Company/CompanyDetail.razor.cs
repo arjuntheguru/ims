@@ -21,16 +21,13 @@ namespace IMS.WebApp.Components.Company
         [Inject]
         public IMapper Mapper { get; set; }
 
-        [Inject]
-        IDialogService DialogService { get; set; }
-
         private void OpenDialog(CompanyDto company)
         {
             var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, CloseButton = true };
             var parameters = new DialogParameters();
             parameters.Add(nameof(AddEditCompanyDialog.Model), Mapper.Map<AddEditCompanyCommand>(company));
             parameters.Add(nameof(AddEditCompanyDialog.IsEdit), true);
-            DialogService.Show<AddEditCompanyDialog>("Add Company", parameters,options);
+            _dialogService.Show<AddEditCompanyDialog>("Add Company", parameters,options);
         }
 
     }

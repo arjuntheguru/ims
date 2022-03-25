@@ -9,6 +9,9 @@ namespace IMS.Application.Common.Models
 {
     public class ApplicationRole : MongoDbRole
     {
+        public ApplicationRole(string name) : base(name)
+        {
 
+        }
     }
 }

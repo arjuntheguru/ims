@@ -1,4 +1,5 @@
 ﻿@using System.Net.Http
+@using IMS.WebApp.Services
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
@@ -7,8 +8,17 @@
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
 @using IMS.WebApp
+@using IMS.WebApp.Pages
 @using IMS.WebApp.Shared
 @using MudBlazor
 @using FluentValidation
 @using IMS.WebApp.Components.Common
 @using Fluxor
+
+@attribute [Authorize]
+@inject NavigationManager _navigationManager
+@inject AuthenticationStateProvider _stateProvider
+@inject IAuthorizationService _authorizationService
+@inject ISnackbar _snackBar
+@inject IDialogService _dialogService
+@inject IJSRuntime _jsRuntime

@@ -1,0 +1,23 @@
+﻿@using System.Security.Claims
+
+
+<MudNavMenu Color="Color.Tertiary">
+    <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
+    @if (_canViewCompany)
+    {
+         <MudNavLink Href="/company" Match="NavLinkMatch.All">Company</MudNavLink>
+    }
+
+</MudNavMenu>
+
+@code{
+    private ClaimsPrincipal _authenticationStateProviderUser;
+
+    private bool _canViewCompany;
+
+    protected async override Task OnParametersSetAsync()
+    {
+       _authenticationStateProviderUser = await ((CustomAuthenticationStateProvider)_stateProvider).GetAuthenticationStateProviderUserAsync();
+       _canViewCompany = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, "Company.View")).Succeeded;
+    }
+}

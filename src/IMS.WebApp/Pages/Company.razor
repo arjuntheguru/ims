@@ -1,5 +1,7 @@
 ﻿@page "/company"
+@using IMS.Domain.Constants
 @using IMS.WebApp.Components.Company
+@attribute [Authorize(Policy ="Company.View")]
 
 <PageTitle>Company</PageTitle>
 

@@ -1,0 +1,84 @@
+﻿@using IMS.Application.Common.Models
+@using IMS.WebApp.Services
+@using Microsoft.AspNetCore.Identity
+
+<PageTitle>Login</PageTitle>
+
+<MudPaper Class="d-flex justify-center" Style="height: 85vh;" Elevation="0">
+    <MudCard Outlined="true" Elevation="1" Style="width: 500px;" Class="align-self-center">
+    <MudForm Model=@model @ref=loginForm Validation=@(Validator.ValidateModel<LoginRequestModel,LoginRequestModelValidator>())>
+        <MudCardContent>
+            <MudTextField @bind-Value=model.Username Label="Username" For=@(() => model.Username) />
+            <MudTextField @bind-Value=model.Password Label="Password" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ToggleShowPassword" For=@(() => model.Password) />
+        </MudCardContent>
+    </MudForm>
+    <MudCardActions Class="d-flex justify-space-between">
+        <MudText Class=@($"{errorMessageClass} mx-3") Typo=Typo.body2 Color="Color.Error">Username or Passowrd is incorrect</MudText>
+        <MudButton Color="Color.Primary" OnClick="Submit">Login</MudButton>
+    </MudCardActions>
+</MudCard>
+</MudPaper>
+
+@code {
+    MudForm loginForm;
+    string errorMessageClass = "invisible";
+    LoginRequestModel model = new();
+    bool isShow;
+    InputType PasswordInput = InputType.Password;
+    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+    [Inject]
+    public SignInManager<ApplicationUser> SignInManager { get; set; }
+
+    [Inject]
+    public UserManager<ApplicationUser> UserManager { get; set; }
+
+    void ToggleShowPassword()
+    {
+        @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+
+    async Task Submit()
+    {
+        await loginForm.Validate();
+
+        errorMessageClass = "invisible";
+
+        if (loginForm.IsValid)
+        {
+            var user = await UserManager.FindByNameAsync(model.Username);
+
+            if (user != null)
+            {
+                var result = await SignInManager.CheckPasswordSignInAsync(user, model.Password, false);
+
+                if (result.Succeeded)
+                {
+                    await ((CustomAuthenticationStateProvider)_stateProvider).MarkUserAsAuthenticatedAsync(model.Username);
+                }
+                else
+                {
+                    errorMessageClass = "";
+                }
+
+            }
+            else
+            {
+                errorMessageClass = "";
+            }
+        }
+
+    }
+
+}
