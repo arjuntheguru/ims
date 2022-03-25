@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMS.Infrastructure.Persistence.Helpers
+namespace IMS.Infrastructure.Identity.Helpers
 {
     public static class Permissions
     {
@@ -22,8 +22,8 @@ namespace IMS.Infrastructure.Persistence.Helpers
         public static List<string> GenerateReadPermissionForModule(string module)
         {
             return new List<string>()
-            {               
-                $"{module}.View"             
+            {
+                $"{module}.View"
             };
         }
     }

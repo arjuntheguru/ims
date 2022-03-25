@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMS.Infrastructure.Persistence.Helpers
+namespace IMS.Infrastructure.Identity.Helpers
 {
     public static class SuperAdminModules
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMS.Infrastructure.Persistence.SeedData
+namespace IMS.Infrastructure.Identity.SeedData
 {
     public static class DefaultRoles
     {

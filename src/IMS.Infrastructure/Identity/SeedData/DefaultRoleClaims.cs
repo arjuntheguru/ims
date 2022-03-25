@@ -1,6 +1,6 @@
 ﻿using IMS.Application.Common.Models;
 using IMS.Domain.Constants;
-using IMS.Infrastructure.Persistence.Helpers;
+using IMS.Infrastructure.Identity.Helpers;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -9,13 +9,13 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMS.Infrastructure.Persistence.SeedData
+namespace IMS.Infrastructure.Identity.SeedData
 {
     public static class DefaultRoleClaims
     {
         public static async Task SeedAsync(RoleManager<ApplicationRole> roleManager)
         {
-            await roleManager.SeedClaimsForSuperAdmin();     
+            await roleManager.SeedClaimsForSuperAdmin();
         }
 
         private static async Task SeedClaimsForSuperAdmin(this RoleManager<ApplicationRole> roleManager)

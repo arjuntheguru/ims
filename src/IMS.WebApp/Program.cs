@@ -15,8 +15,8 @@ using System.Reflection;
 using IMS.WebApp.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.SessionStorage;
-using IMS.Infrastructure.Persistence.SeedData;
-using IMS.Infrastructure.Persistence.Helpers;
+using IMS.Infrastructure.Identity.Helpers;
+using IMS.Infrastructure.Identity.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,7 +63,6 @@ builder.Services.AddAuthorizationCore(options =>
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped<CompanyStateFacade>();
 builder.Services.AddScoped<SnackbarHandler>();
-//builder.Services.AddScoped<CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddHostedService<SeedDataService>();
 
