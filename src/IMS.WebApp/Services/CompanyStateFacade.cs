@@ -21,9 +21,9 @@ namespace IMS.WebApp.Services
             _dispatcher = dispatcher;
         }
 
-        public void LoadCompanies(int pageNumber, int pageSize)
+        public void LoadCompanies(int pageNumber, int pageSize, string nameSearch = "")
         {
-            _dispatcher.Dispatch(new LoadCompaniesAction(pageNumber, pageSize));
+            _dispatcher.Dispatch(new LoadCompaniesAction(pageNumber, pageSize, nameSearch));
         }
 
         public void SelectCompany(CompanyDto company)

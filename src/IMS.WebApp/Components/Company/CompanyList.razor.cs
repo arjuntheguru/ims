@@ -36,7 +36,14 @@ namespace IMS.WebApp.Components.Company
 
         private void PageNumberChangeHandler(int pageNumber)
         {
-            CompanyStateFacade.LoadCompanies(pageNumber, 5);
+            CompanyStateFacade.LoadCompanies(pageNumber, 5, SearchString);
+        }
+
+        private void SearchHandler(string value)
+        {
+            SearchString = value;
+            Console.WriteLine(value);
+            CompanyStateFacade.LoadCompanies(1, 5, SearchString);
         }
 
     }

@@ -21,7 +21,7 @@ namespace IMS.WebApp.Store.Company.Effects
 
         public async override Task HandleAsync(LoadCompaniesAction action, IDispatcher dispatcher)
         {
-            var response = await _sender.Send(new GetCompanyQuery() { PageNumber = action.PageNumber, PageSize = action.PageSize });
+            var response = await _sender.Send(new GetCompanyQuery() { PageNumber = action.PageNumber, PageSize = action.PageSize, NameSearch = action.NameSearch });
             if (response.Succeeded)
                 dispatcher.Dispatch(new LoadCompaniesSuccessAction(response.Data, response.TotalRecords));
             else

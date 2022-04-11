@@ -1,6 +1,6 @@
 ﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<MudTextField @bind-Value="SearchString" Label="Search Company" Variant="Variant.Outlined" Class="pa-6"></MudTextField>
+<MudTextField T="String" Value="SearchString" Label="Search Company"  ValueChanged="SearchHandler" Variant="Variant.Outlined" Class="pa-6" Immediate="true"></MudTextField>
 @if (CompanyState.Value.IsLoading)
 {
     <MudPaper Class="d-flex flex-grow-1 gap-4 justify-center" Outlined="true" Square=true Height="63vh">

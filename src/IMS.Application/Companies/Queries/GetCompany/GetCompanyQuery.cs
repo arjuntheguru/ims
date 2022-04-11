@@ -18,6 +18,7 @@ namespace IMS.Application.Companies.Queries.GetCompany
 {
     public class GetCompanyQuery : IRequest<PagedResponse<IEnumerable<CompanyDto>>>
     {
+        public string NameSearch { get; set; } = "";
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
     }
@@ -38,7 +39,7 @@ namespace IMS.Application.Companies.Queries.GetCompany
         {
             var validFilter = new PaginationFilter(request.PageNumber, request.PageSize);
             var companies = await _context.Companies
-                .Find(new BsonDocument())
+                .Find(p => p.Name.ToLower().Contains(request.NameSearch.ToLower()))
                 .SortByDescending(p => p.CreatedDate)
                 .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Limit(validFilter.PageSize)
